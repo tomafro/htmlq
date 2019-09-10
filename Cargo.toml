@@ -1,0 +1,9 @@
+[package]
+name = "htmlq"
+version = "0.1.0"
+authors = ["Tom Ward <tom@popdog.net>"]
+edition = "2018"
+
+[dependencies]
+scraper = "0.10.1"
+clap = "2.33"
