@@ -18,31 +18,32 @@ fn run() -> htmlq::Result<()> {
     let config = config();
 
     let html = read_html(&config);
-    let fragment = Html::parse_fragment(&html?);
+    let document = Html::parse_document(&html?);
 
     if let Some(query) = &config.selector {
         let selector = Selector::parse(&query).unwrap();
 
-        let mut result = fragment.select(&selector).peekable();
+        let mut result = document.select(&selector).peekable();
 
         if result.peek().is_none() {
             std::process::exit(1);
         }
 
-        for element in fragment.select(&selector) {
+        for element in document.select(&selector) {
             output(&config, &element);
         }
+
+        Ok(())
     }
     else {
-        output(&config, &fragment.root_element());
+        Err(Error::Impossible)
     }
-
-    Ok(())
 }
 
 fn output(config: &Config, element: &scraper::element_ref::ElementRef) {
     match &config.output {
         Some(output) => match output.as_ref() {
+            "debug" => println!("{:?}", element.children()),
             "inner" => println!("{}", element.inner_html()),
             "text"  => println!("{}", element.text().collect::<Vec<_>>().join(" ")),
             _       => println!("{}", element.html())

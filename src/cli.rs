@@ -18,8 +18,9 @@ pub fn cli<'a, 'b>() -> App<'a, 'b> {
                 .takes_value(true)
                 .short("o")
                 .long("output")
-                .possible_values(&["outer", "inner", "text"]))
-            .arg(Arg::with_name(SELECTOR_ARG))
+                .possible_values(&["outer", "inner", "text", "debug"]))
+            .arg(Arg::with_name(SELECTOR_ARG)
+                .default_value(":root"))
 }
 
 pub fn config() -> Config {

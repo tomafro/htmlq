@@ -7,3 +7,5 @@ edition = "2018"
 [dependencies]
 scraper = "0.10.1"
 clap = "2.33"
+html5ever = "*"
+markup5ever = "*"

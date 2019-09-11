@@ -155,6 +155,8 @@ name = "htmlq"
 version = "0.2.0"
 dependencies = [
  "clap 2.33.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "html5ever 0.22.5 (registry+https://github.com/rust-lang/crates.io-index)",
+ "markup5ever 0.7.5 (registry+https://github.com/rust-lang/crates.io-index)",
  "scraper 0.10.1 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 

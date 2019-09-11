@@ -7,6 +7,7 @@ const AUTHORS: &'static str = env!("CARGO_PKG_AUTHORS");
 
 #[derive(Debug)]
 pub enum Error {
+    Impossible,
     UnableToOpenFile(String),
     IO(std::io::Error),
 }
