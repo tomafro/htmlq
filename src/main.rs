@@ -1,4 +1,5 @@
 use htmlq::*;
+use htmlq::cli::cli;
 
 use std::io::Read;
 use scraper::{Html, Selector};

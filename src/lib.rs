@@ -1,4 +1,4 @@
-use clap::{App, Arg};
+pub mod cli;
 
 const NAME: &'static str = env!("CARGO_PKG_NAME");
 const VERSION: &'static str = env!("CARGO_PKG_VERSION");
@@ -11,16 +11,3 @@ pub enum Error {
 }
 
 pub type Result<T> = std::result::Result<T, Error>;
-
-pub fn cli<'a, 'b>() -> App<'a, 'b> {
-    App::new(NAME)
-        .version(VERSION)
-        .author(AUTHORS)
-        .about(DESCRIPTION)
-            .arg(Arg::with_name("selector")
-                .required(true))
-            .arg(Arg::with_name("file")
-                .takes_value(true)
-                .short("f")
-                .long("file"))
-}
