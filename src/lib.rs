@@ -1,5 +1,3 @@
-
-
 use clap::{App, Arg};
 
 const NAME: &'static str = env!("CARGO_PKG_NAME");
@@ -19,8 +17,10 @@ pub fn cli<'a, 'b>() -> App<'a, 'b> {
         .version(VERSION)
         .author(AUTHORS)
         .about(DESCRIPTION)
-            .display_order(0)
-            .arg(Arg::with_name("query")
+            .arg(Arg::with_name("selector")
                 .required(true))
-            .arg(Arg::with_name("file"))
+            .arg(Arg::with_name("file")
+                .takes_value(true)
+                .short("f")
+                .long("file"))
 }
