@@ -19,7 +19,7 @@ impl std::convert::From<std::io::Error> for Error {
 }
 
 pub struct Config {
-    pub selector: Option<String>,
+    pub selector: String,
     pub filename: Option<String>,
     pub output: Option<String>
 }

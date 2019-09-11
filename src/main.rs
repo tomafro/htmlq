@@ -20,24 +20,19 @@ fn run() -> htmlq::Result<()> {
     let html = read_html(&config);
     let document = Html::parse_document(&html?);
 
-    if let Some(query) = &config.selector {
-        let selector = Selector::parse(&query).unwrap();
+    let selector = Selector::parse(&config.selector).unwrap();
 
-        let mut result = document.select(&selector).peekable();
+    let mut result = document.select(&selector).peekable();
 
-        if result.peek().is_none() {
-            std::process::exit(1);
-        }
-
-        for element in document.select(&selector) {
-            output(&config, &element);
-        }
-
-        Ok(())
+    if result.peek().is_none() {
+        std::process::exit(1);
     }
-    else {
-        Err(Error::Impossible)
+
+    for element in document.select(&selector) {
+        output(&config, &element);
     }
+
+    Ok(())
 }
 
 fn output(config: &Config, element: &scraper::element_ref::ElementRef) {

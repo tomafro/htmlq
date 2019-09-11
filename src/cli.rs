@@ -27,7 +27,7 @@ pub fn config() -> Config {
     let arguments = cli().get_matches();
 
     Config {
-        selector: arguments.value_of(SELECTOR_ARG).map(str::to_string),
+        selector: arguments.value_of(SELECTOR_ARG).unwrap().to_owned(),
         filename: arguments.value_of(FILENAME_ARG).map(str::to_string),
         output: arguments.value_of(OUTPUT_ARG).map(str::to_string)
     }
