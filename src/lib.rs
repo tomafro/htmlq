@@ -10,4 +10,9 @@ pub enum Error {
     Problem,
 }
 
+pub struct Config {
+    pub selector: Option<String>,
+    pub filename: Option<String>
+}
+
 pub type Result<T> = std::result::Result<T, Error>;
