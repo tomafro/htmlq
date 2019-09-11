@@ -5,7 +5,13 @@ use std::io::Read;
 use scraper::{Html, Selector};
 
 fn main() {
-    run().unwrap();
+    if let Err(e) = run() {
+        match e {
+            Error::UnableToOpenFile(filename) => println!("Unable to open the file '{}'", filename),
+            _ => println!("{:?}", e)
+        }
+        std::process::exit(1);
+    }
 }
 
 fn run() -> htmlq::Result<()> {
@@ -46,12 +52,28 @@ fn output(config: &Config, element: &scraper::element_ref::ElementRef) {
 }
 
 fn read_html(config: &Config) -> htmlq::Result<String> {
+    match &config.filename {
+        None => read_stdin(),
+        Some(filename) => read_file(filename)
+    }
+}
+
+fn read_stdin() -> htmlq::Result<String> {
     let mut result = String::new();
 
-    match &config.filename {
-        None => std::io::BufReader::new(std::io::stdin()).read_to_string(&mut result)?,
-        Some(filename) => std::io::BufReader::new(std::fs::File::open(filename)?).read_to_string(&mut result)?
-    };
+    std::io::BufReader::new(std::io::stdin()).read_to_string(&mut result)?;
 
     Ok(result)
+}
+
+fn read_file(filename: &String) -> htmlq::Result<String> {
+    let mut result = String::new();
+
+    if let Ok(file) = std::fs::File::open(filename) {
+        std::io::BufReader::new(file).read_to_string(&mut result)?;
+        Ok(result)
+    }
+    else {
+        Err(Error::UnableToOpenFile(filename.to_owned()))
+    }
 }
