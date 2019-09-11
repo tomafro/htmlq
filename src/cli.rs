@@ -9,12 +9,11 @@ pub fn cli<'a, 'b>() -> App<'a, 'b> {
         .version(VERSION)
         .author(AUTHORS)
         .about(DESCRIPTION)
-            .arg(Arg::with_name(SELECTOR_ARG)
-                .required(true))
             .arg(Arg::with_name(FILENAME_ARG)
                 .takes_value(true)
                 .short("f")
                 .long("file"))
+            .arg(Arg::with_name(SELECTOR_ARG))
 }
 
 pub fn config() -> Config {

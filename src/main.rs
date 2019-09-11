@@ -14,17 +14,21 @@ fn run() -> htmlq::Result<()> {
     let html = read_html(&config);
     let fragment = Html::parse_fragment(&html?);
 
-    let query = config.selector.unwrap();
-    let selector = Selector::parse(&query).unwrap();
+    if let Some(query) = config.selector {
+        let selector = Selector::parse(&query).unwrap();
 
-    let mut result = fragment.select(&selector).peekable();
+        let mut result = fragment.select(&selector).peekable();
 
-    if result.peek().is_none() {
-        std::process::exit(1);
+        if result.peek().is_none() {
+            std::process::exit(1);
+        }
+
+        for element in fragment.select(&selector) {
+            println!("{}", element.html());
+        }
     }
-
-    for element in fragment.select(&selector) {
-        println!("{}", element.html());
+    else {
+        println!("{}", fragment.root_element().html());
     }
 
     Ok(())
