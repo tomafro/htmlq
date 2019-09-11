@@ -19,6 +19,7 @@ pub fn cli<'a, 'b>() -> App<'a, 'b> {
 
 pub fn config() -> Config {
     let arguments = cli().get_matches();
+
     Config {
         selector: arguments.value_of(SELECTOR_ARG).map(str::to_string),
         filename: arguments.value_of(FILENAME_ARG).map(str::to_string)

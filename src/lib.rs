@@ -7,7 +7,13 @@ const AUTHORS: &'static str = env!("CARGO_PKG_AUTHORS");
 
 #[derive(Debug)]
 pub enum Error {
-    Problem,
+    IO(std::io::Error),
+}
+
+impl std::convert::From<std::io::Error> for Error {
+    fn from(error: std::io::Error) -> Self {
+        Error::IO(error)
+    }
 }
 
 pub struct Config {

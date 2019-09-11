@@ -12,7 +12,7 @@ fn run() -> htmlq::Result<()> {
     let config = config();
 
     let html = read_html(&config);
-    let fragment = Html::parse_fragment(&html);
+    let fragment = Html::parse_fragment(&html?);
 
     let query = config.selector.unwrap();
     let selector = Selector::parse(&query).unwrap();
@@ -30,13 +30,13 @@ fn run() -> htmlq::Result<()> {
     Ok(())
 }
 
-fn read_html(config: &Config) -> String {
+fn read_html(config: &Config) -> htmlq::Result<String> {
     let mut result = String::new();
 
     match &config.filename {
-        None => std::io::BufReader::new(std::io::stdin()).read_to_string(&mut result),
-        Some(filename) => std::io::BufReader::new(std::fs::File::open(filename).unwrap()).read_to_string(&mut result)
+        None => std::io::BufReader::new(std::io::stdin()).read_to_string(&mut result)?,
+        Some(filename) => std::io::BufReader::new(std::fs::File::open(filename)?).read_to_string(&mut result)?
     };
 
-    result
+    Ok(result)
 }
