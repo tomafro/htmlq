@@ -18,7 +18,8 @@ impl std::convert::From<std::io::Error> for Error {
 
 pub struct Config {
     pub selector: Option<String>,
-    pub filename: Option<String>
+    pub filename: Option<String>,
+    pub output: Option<String>
 }
 
 pub type Result<T> = std::result::Result<T, Error>;
